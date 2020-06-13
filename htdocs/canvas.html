@@ -1,0 +1,57 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<script>
+window.onload = function() {
+
+var dataPoints = [];
+
+var chart = new CanvasJS.Chart("chartContainer", {
+	animationEnabled: true,
+	theme: "light1",
+	title: {
+		text: "Economia Brasileira"
+	}, 
+	axisX: {
+		interval: 20,
+		intervalType: "day",
+	},
+	axisY: {
+		title: "Valores Absolutos",
+		titleFontSize: 24,
+		interval: 3,
+		minimum: 55,
+		maximum: 75 
+	},
+	data: [{
+		type: "area",
+		yValueFormatString: "##.##",
+		dataPoints: dataPoints
+	}]
+});
+
+function addData(data) {
+
+	for (var i = 0; i < data.length; i++) {
+		dataPoints.push({
+			x: new Date(data[i].data),
+			y: data[i].indice
+		});
+
+	}
+	
+	chart.render();
+
+}
+
+$.getJSON("dadosDoGrafico.json", addData);
+
+}
+</script>
+</head>
+<body>
+<div id="chartContainer" style="height: 300px; width: 70%; margin: 0 auto;"></div>
+<script src="jquery-1.11.1.min.js"></script>
+<script src="canvasjs.min.js"></script>
+</body>
+</html>
